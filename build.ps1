@@ -1,7 +1,7 @@
 ##########################################################################
 # This is the Cake bootstrapper script for PowerShell.
 # This file was downloaded from https://github.com/cake-build/resources
-# Feel free to change this file to fit your needs.
+# Feel free to change this file to fit your needs. 
 ##########################################################################
 
 <#
