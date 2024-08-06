@@ -3,7 +3,7 @@ on:
     paths-ignore:
       - "**/*.md"
     branches:
-      - 'main'
+      - 'master'
 
 jobs:
   build:
