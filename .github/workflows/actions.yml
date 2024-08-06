@@ -6,8 +6,8 @@ on:
       - 'master'
 
 jobs:
-  build:
-    runs-on: ubuntu-22.04
+  checkout:
+    runs-on: windows-latest
     steps:
       - uses: actions/checkout@v3
         with:
