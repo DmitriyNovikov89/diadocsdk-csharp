@@ -20,5 +20,6 @@ jobs:
           target: AppVeyor
           arguments: |
             configuration: Release
+          cake-version: 1.0.0
   
   
