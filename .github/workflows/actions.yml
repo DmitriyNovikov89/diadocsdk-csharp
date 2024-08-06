@@ -1,1 +1,24 @@
+on:
+  push:
+    paths-ignore:
+      - "**/*.md"
+    branches:
+      - 'main'
 
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Run the build script
+        uses: cake-build/cake-action@v2
+        env:
+          diadoc_signing_secret: ${{ secrets.DIADOC_SIGNING_SECRET }}
+        with:
+          target: AppVeyor
+          arguments: |
+            configuration: Release
+  
+  
