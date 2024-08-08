@@ -24,7 +24,7 @@ jobs:
         env:
           diadoc_signing_secret: ${{ secrets.DIADOC_SIGNING_SECRET }}
         with:
-          target: AppVeyor
+          target: Default
           arguments: |
             configuration: Release
           cake-version: 1.3.0
