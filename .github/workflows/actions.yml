@@ -36,6 +36,6 @@ jobs:
         with:
           name: packages
           path: |
-            */bin/Release/*.nupkg
-            */bin/Release/*.zip
+            bin/Release/*.nupkg
+            bin/Release/*.zip
           if-no-files-found: error
