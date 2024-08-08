@@ -30,7 +30,7 @@ var packageVersion = "";
 
 Setup(context =>
 {
-	if (BuildSystem.IsRunningOnAppVeyor && AppVeyor.Environment.PullRequest.IsPullRequest)
+	if (BuildSystem.IsRunningOnGitHubActions)
 	{
 		needSigning = false;
 		return;
@@ -72,7 +72,7 @@ Task("GenerateVersionInfo")
 		var tagVersion = GetVersionFromTag();
 		var clearVersion = ClearVersionTag(tagVersion) ?? "1.0.0";
 		var semanticVersionForNuget = GetSemanticVersionV1(clearVersion);
-		var semanticVersion = GetSemanticVersionV2(clearVersion) + dbgSuffix;
+		var semanticVersion = semanticVersionForNuget + dbgSuffix;
 
 		var versionParts = clearVersion.Split('.');
 		var majorVersion = 1;
@@ -316,9 +316,9 @@ public string GetVersionFromTag()
 {
 	var lastestTag = "";
 
-	if (BuildSystem.IsRunningOnAppVeyor)
+	if (BuildSystem.IsRunningOnGitHubActions)
 	{
-		var tag = BuildSystem.AppVeyor.Environment.Repository.Tag;
+		var tag = BuildSystem.GitHubActions.Environment.Repository.Tag;
 		if (tag.IsTag)
 		{
 			return tag.Name;
@@ -342,47 +342,19 @@ public string GetVersionFromTag()
 
 public string GetSemanticVersionV1(string clearVersion)
 {
-	if (BuildSystem.IsRunningOnAppVeyor)
+	if (BuildSystem.IsRunningOnGitHubActions)
 	{
-		var tag = BuildSystem.AppVeyor.Environment.Repository.Tag;
+		var tag = BuildSystem.GitHubActions.Environment.Repository.Tag;
 		if (tag.IsTag)
 		{
 			return clearVersion;
 		}
 
-		var buildNumber = BuildSystem.AppVeyor.Environment.Build.Number;
+		var buildNumber = BuildSystem.GitHubActions.Environment.Build.Number;
 		return $"{clearVersion}-CI{buildNumber}";
 	}
 
 	return $"{clearVersion}-dev";
-}
-
-public string GetSemanticVersionV2(string clearVersion)
-{
-	if (BuildSystem.IsRunningOnAppVeyor)
-	{
-		var tag = BuildSystem.AppVeyor.Environment.Repository.Tag;
-		if (tag.IsTag)
-		{
-			return clearVersion;
-		}
-
-		return GetAppVeyorBuildVersion(clearVersion);
-	}
-	return $"{clearVersion}-dev";
-}
-
-public string GetAppVeyorBuildVersion(string clearVersion)
-{
-	if (BuildSystem.IsRunningOnAppVeyor)
-	{
-		var buildNumber = BuildSystem.AppVeyor.Environment.Build.Number;
-		clearVersion += $"-CI.{buildNumber}";
-		return (AppVeyor.Environment.PullRequest.IsPullRequest
-			? clearVersion += $"-PR.{AppVeyor.Environment.PullRequest.Number}"
-			: clearVersion += "-" + AppVeyor.Environment.Repository.Branch);
-	}
-	return clearVersion;
 }
 
 public static string ClearVersionTag(string lastestTag)
