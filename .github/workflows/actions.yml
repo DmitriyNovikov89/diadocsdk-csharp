@@ -39,3 +39,17 @@ jobs:
             bin/Release/*.nupkg
             bin/Release/*.zip
           if-no-files-found: error
+
+  publish:
+    runs-on: ubuntu-20.04
+    needs: build_and_test
+    if: startsWith(github.event.ref, 'refs/tags/v')
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      
+      - name: Download artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: packages
