@@ -271,21 +271,6 @@ Task("Nuget-Pack")
 		NuGetPack("./nuspec/DiadocApi.nuspec", nuGetPackSettings);
 	});
 
-Task("PublishArtifactsToAppVeyor")
-	.IsDependentOn("Nuget-Pack")
-	.WithCriteria(x => BuildSystem.IsRunningOnAppVeyor)
-	.Does(() =>
-	{
-		AppVeyor.UploadArtifact(binariesNet35Zip);
-		AppVeyor.UploadArtifact(binariesNet45Zip);
-		AppVeyor.UploadArtifact(binariesNet461Zip);
-		AppVeyor.UploadArtifact(binariesNetStandard2Zip);
-		foreach (var upload in GetFiles(buildDir + "/*.nupkg"))
-		{
-			AppVeyor.UploadArtifact(upload​);
-		}
-	});
-
 Task("Test")
 	.IsDependentOn("Build")
 	.Does(() =>
@@ -301,9 +286,6 @@ Task("Test")
 // TASK TARGETS
 //////////////////////////////////////////////////////////////////////
 
-Task("Default")
-	.IsDependentOn("AppVeyor");
-
 Task("FullBuild")
 	.IsDependentOn("GenerateVersionInfo")
 	.IsDependentOn("Build");
@@ -313,13 +295,12 @@ Task("Rebuild")
 	.IsDependentOn("GenerateVersionInfo")
 	.IsDependentOn("Build");
 
-Task("Appveyor")
+Task("Default")
 	.IsDependentOn("PrepareBinaries")
 	.IsDependentOn("Build")
 	.IsDependentOn("Test")
 	.IsDependentOn("Repack")
-	.IsDependentOn("Nuget-Pack")
-	.IsDependentOn("PublishArtifactsToAppVeyor");
+	.IsDependentOn("Nuget-Pack");
 
 //////////////////////////////////////////////////////////////////////
 // EXECUTION
