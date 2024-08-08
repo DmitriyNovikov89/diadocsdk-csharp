@@ -2,6 +2,7 @@ on:
   push:
     paths-ignore:
       - "**/*.md"
+      - "**/*.yml"
       
 jobs:
   build_and_test:
@@ -42,6 +43,7 @@ jobs:
 
   publish:
     runs-on: ubuntu-20.04
+    needs: build_and_test
     if: startsWith(github.event.ref, 'refs/tags/version')
     steps:
       - uses: actions/checkout@v3
