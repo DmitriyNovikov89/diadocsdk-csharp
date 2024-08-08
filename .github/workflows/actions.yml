@@ -2,11 +2,9 @@ on:
   push:
     paths-ignore:
       - "**/*.md"
-    branches:
-      - 'master'
-
+      
 jobs:
-  build:
+  build_and_test:
     runs-on: windows-2019
     steps:
       - uses: actions/checkout@v3
