@@ -321,10 +321,12 @@ public string GetVersionFromTag()
         @"Workflow:
         Workflow: {0}
         Action: {1}
-        Actor: {2}",
+        Actor: {2}
+		Props: {3}",
         BuildSystem.GitHubActions.Environment.Workflow.Workflow,
         BuildSystem.GitHubActions.Environment.Workflow.Action,
-        BuildSystem.GitHubActions.Environment.Workflow.Actor
+        BuildSystem.GitHubActions.Environment.Workflow.Actor,
+		String.Join(';', BuildSystem.GitHubActions.Environment.Workflow.GetType().GetProperties());
         );
 	}
 
@@ -358,7 +360,7 @@ public string GetSemanticVersionV1(string clearVersion)
     );
 		
 		//var buildNumber = workflow.RunNumber;
-		return $"{clearVersion}-CI{buildNumber}";
+		//return $"{clearVersion}-CI{buildNumber}";
 	}
 
 	return $"{clearVersion}-dev";
