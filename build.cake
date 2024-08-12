@@ -322,11 +322,11 @@ public string GetVersionFromTag()
         Workflow: {0}
         Action: {1}
         Actor: {2}
-		Props: {3}",
+		Test: {3}",
         BuildSystem.GitHubActions.Environment.Workflow.Workflow,
         BuildSystem.GitHubActions.Environment.Workflow.Action,
         BuildSystem.GitHubActions.Environment.Workflow.Actor,
-		String.Join(';', BuildSystem.GitHubActions.Environment.Workflow.GetType().GetProperties());
+		BuildSystem.GitHubActions.Environment.Workflow.GetType().GetProperties();	
         );
 	}
 
