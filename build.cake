@@ -21,8 +21,6 @@ var binariesNet45Zip = buildDir.CombineWithFilePath("diadocsdk-csharp-net45-bina
 var binariesNet461Zip = buildDir.CombineWithFilePath("diadocsdk-csharp-net461-binaries.zip");
 var binariesNetStandard2Zip = buildDir.CombineWithFilePath("diadocsdk-csharp-netstandard2.0-binaries.zip");
 var needSigning = false;
-var workflow = BuildSystem.GitHubActions.Environment.Workflow;
-
 var packageVersion = "";
 
 //////////////////////////////////////////////////////////////////////
@@ -319,6 +317,7 @@ public string GetVersionFromTag()
 
 	if (BuildSystem.IsRunningOnGitHubActions)
 	{
+		var workflow = BuildSystem.GitHubActions.Environment.Workflow;
 		if (workflow.RefType == GitHubActionsRefType.Tag)
 		{
 			return workflow.RefName;
@@ -344,6 +343,7 @@ public string GetSemanticVersionV1(string clearVersion)
 {
 	if (BuildSystem.IsRunningOnGitHubActions)
 	{
+		var workflow = BuildSystem.GitHubActions.Environment.Workflow;
 		if (workflow.RefType == GitHubActionsRefType.Tag)
 		{
 			return workflow.RefName;
