@@ -8,6 +8,8 @@
 using Cake.Common.Diagnostics;
 using Cake.Git;
 using System.Text.RegularExpressions;
+using Cake.Common.Build.GitHubActions;
+using Cake.Common.Build.GitHubActions.Data;
 
 var target = Argument("target", "Default");
 var configuration = Argument("configuration", "Release");
@@ -315,12 +317,12 @@ public string GetVersionFromTag()
 {
 	var lastestTag = "";
 
-	if (BuildSystem.IsRunningOnGitHubActions)
+	if (BuildSystem.GitHubActions.IsRunningOnGitHubActions)
 	{
 		var workflow = BuildSystem.GitHubActions.Environment.Workflow;
 		if (workflow.RefType == GitHubActionsRefType.Tag)
 		{
-			return workflow.RefName;
+			return workflow.Ref;
 		}
 	}
 
@@ -341,7 +343,7 @@ public string GetVersionFromTag()
 
 public string GetSemanticVersionV1(string clearVersion)
 {
-	if (BuildSystem.IsRunningOnGitHubActions)
+	if (BuildSystem.GitHubActions.IsRunningOnGitHubActions)
 	{
 		var workflow = BuildSystem.GitHubActions.Environment.Workflow;
 		if (workflow.RefType == GitHubActionsRefType.Tag)
