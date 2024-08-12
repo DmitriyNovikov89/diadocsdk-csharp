@@ -1,5 +1,5 @@
 #tool "nuget:?package=ILMerge&version=2.12.803"
-#addin "nuget:?package=Cake.Git&version=4.0.0"
+#addin "nuget:?package=Cake.Git&version=1.0.0"
 #tool "nuget:?package=ILRepack.MSBuild.Task&version=2.0.13"
 #tool "nuget:?package=protobuf-net&version=1.0.0.280"
 #tool "nuget:?package=secure-file&version=1.0.31"
@@ -357,7 +357,7 @@ public string GetSemanticVersionV1(string clearVersion)
     GitHubActions.Environment.Workflow.Actor
     );
 		
-		var buildNumber = workflow.RunNumber;
+		//var buildNumber = workflow.RunNumber;
 		return $"{clearVersion}-CI{buildNumber}";
 	}
 
