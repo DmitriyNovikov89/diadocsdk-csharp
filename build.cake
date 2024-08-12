@@ -8,7 +8,6 @@
 using Cake.Common.Diagnostics;
 using Cake.Git;
 using System.Text.RegularExpressions;
-using System.Reflection;
 
 var target = Argument("target", "Default");
 var configuration = Argument("configuration", "Release");
@@ -318,20 +317,10 @@ public string GetVersionFromTag()
 
 	if (BuildSystem.GitHubActions.IsRunningOnGitHubActions)
 	{
-		Information(
-        @"Workflow:
-        Workflow: {0}
-        Action: {1}
-        Actor: {2}",
-        BuildSystem.GitHubActions.Environment.Workflow.Workflow,
-        BuildSystem.GitHubActions.Environment.Workflow.Action,
-        BuildSystem.GitHubActions.Environment.Workflow.Actor	
-        );
-		PropertyInfo[] properties = BuildSystem.GitHubActions.Environment.Workflow.GetType().GetProperties();
-		foreach(PropertyInfo prop in properties)
+		var workflow = BuildSystem.GitHubActions.Environment.Workflow;
+		if(workflow.RefType == GitHubActionsRefType.Tag)
 		{
-		Information(@"Name: {0}", prop.Name);
-		Information(@"Type: {0}", prop.PropertyType);
+			return workflow.RefName;
 		}
 	}
 
@@ -354,18 +343,14 @@ public string GetSemanticVersionV1(string clearVersion)
 {
 	if (BuildSystem.GitHubActions.IsRunningOnGitHubActions)
 	{
-		Information(
-    @"Workflow:
-    Workflow: {0}
-    Action: {1}
-    Actor: {2}",
-    GitHubActions.Environment.Workflow.Workflow,
-    GitHubActions.Environment.Workflow.Action,
-    GitHubActions.Environment.Workflow.Actor
-    );
+		var workflow = BuildSystem.GitHubActions.Environment.Workflow;
+		if(workflow.RefType == GitHubActionsRefType.Tag)
+		{
+			return workflow.RefName;
+		}
 		
-		//var buildNumber = workflow.RunNumber;
-		//return $"{clearVersion}-CI{buildNumber}";
+		var buildNumber = workflow.RunNumber;
+		return $"{clearVersion}-CI{buildNumber}";
 	}
 
 	return $"{clearVersion}-dev";
