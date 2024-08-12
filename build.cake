@@ -318,9 +318,9 @@ public string GetVersionFromTag()
 
 	if (BuildSystem.IsRunningOnGitHubActions)
 	{
-		if (BuildSystem.GitHubActions.Environment.WorkFlow.RefType == GitHubActionsRefType.Tag)
+		if (BuildSystem.GitHubActions.Environment.Workflow.RefType == GitHubActionsRefType.Tag)
 		{
-			return BuildSystem.GitHubActions.Environment.WorkFlow.RefName;
+			return BuildSystem.GitHubActions.Environment.Workflow.RefName;
 		}
 	}
 
@@ -343,12 +343,12 @@ public string GetSemanticVersionV1(string clearVersion)
 {
 	if (BuildSystem.IsRunningOnGitHubActions)
 	{
-		if (BuildSystem.GitHubActions.Environment.WorkFlow.RefType == GitHubActionsRefType.Tag)
+		if (BuildSystem.GitHubActions.Environment.Workflow.RefType == GitHubActionsRefType.Tag)
 		{
-			return BuildSystem.GitHubActions.Environment.WorkFlow.RefName;
+			return BuildSystem.GitHubActions.Environment.Workflow.RefName;
 		}
 
-		var buildNumber = BuildSystem.GitHubActions.Environment.WorkFlow.RunNumber;
+		var buildNumber = BuildSystem.GitHubActions.Environment.Workflow.RunNumber;
 		return $"{clearVersion}-CI{buildNumber}";
 	}
 
