@@ -23,7 +23,7 @@ var binariesNetStandard2Zip = buildDir.CombineWithFilePath("diadocsdk-csharp-net
 var needSigning = false;
 var packageVersion = "";
 
-///////////////////////////////////////////////////////////////////// /
+//////////////////////////////////////////////////////////////////////
 // TASKS
 //////////////////////////////////////////////////////////////////////
 
@@ -317,11 +317,15 @@ public string GetVersionFromTag()
 
 	if (BuildSystem.GitHubActions.IsRunningOnGitHubActions)
 	{
-		var workflow = BuildSystem.GitHubActions.Environment.Workflow;
-		if(workflow.RefType == GitHubActionsRefType.Tag)
-		{
-			return EnvironmentVariable("GITHUB_REF");
-		}
+		Information(
+        @"Workflow:
+        Workflow: {0}
+        Action: {1}
+        Actor: {2}",
+        BuildSystem.GitHubActions.Environment.Workflow.Workflow,
+        BuildSystem.GitHubActions.Environment.Workflow.Action,
+        BuildSystem.GitHubActions.Environment.Workflow.Actor
+        );
 	}
 
 	if (string.IsNullOrEmpty(lastestTag))
@@ -343,11 +347,15 @@ public string GetSemanticVersionV1(string clearVersion)
 {
 	if (BuildSystem.GitHubActions.IsRunningOnGitHubActions)
 	{
-		var workflow = BuildSystem.GitHubActions.Environment.Workflow;
-		if(workflow.RefType == GitHubActionsRefType.Tag)
-		{
-			return EnvironmentVariable("GITHUB_REF");
-		}
+		Information(
+    @"Workflow:
+    Workflow: {0}
+    Action: {1}
+    Actor: {2}",
+    GitHubActions.Environment.Workflow.Workflow,
+    GitHubActions.Environment.Workflow.Action,
+    GitHubActions.Environment.Workflow.Actor
+    );
 		
 		var buildNumber = workflow.RunNumber;
 		return $"{clearVersion}-CI{buildNumber}";
