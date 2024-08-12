@@ -1,10 +1,10 @@
 #tool "nuget:?package=ILMerge&version=2.12.803"
-#addin "nuget:?package=Cake.Git&version=0.21.0"
+#addin "nuget:?package=Cake.Git&version=4.0.0"
 #tool "nuget:?package=ILRepack.MSBuild.Task&version=2.0.13"
 #tool "nuget:?package=protobuf-net&version=1.0.0.280"
 #tool "nuget:?package=secure-file&version=1.0.31"
 #tool "nuget:?package=Brutal.Dev.StrongNameSigner&version=2.7.1"
-#addin "nuget:?package=Cake.StrongNameSigner&version=0.1.0"
+#addin "nuget:?package=Cake.StrongNameSigner&version=0.2.0"
 using Cake.Common.Diagnostics;
 using Cake.Git;
 using System.Text.RegularExpressions;
