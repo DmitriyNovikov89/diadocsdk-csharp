@@ -21,8 +21,6 @@ var binariesNet45Zip = buildDir.CombineWithFilePath("diadocsdk-csharp-net45-bina
 var binariesNet461Zip = buildDir.CombineWithFilePath("diadocsdk-csharp-net461-binaries.zip");
 var binariesNetStandard2Zip = buildDir.CombineWithFilePath("diadocsdk-csharp-netstandard2.0-binaries.zip");
 var needSigning = false;
-var workflow = BuildSystem.GitHubActions.Environment.Workflow;
-var buildId = workflow.RunNumber;
 
 var packageVersion = "";
 
@@ -320,10 +318,9 @@ public string GetVersionFromTag()
 
 	if (BuildSystem.IsRunningOnGitHubActions)
 	{
-		var tag = workflow.RefType == GitHubActionsRefType.Tag ? workflow.RefName : null;
-		if (tag != null)
+		if (BuildSystem.GitHubActions.Environment.Workflow.Workflow.RefType == GitHubActionsRefType.Tag)
 		{
-			return tag;
+			return BuildSystem.GitHubActions.Environment.Workflow.Workflow.RefName;
 		}
 	}
 
@@ -346,13 +343,13 @@ public string GetSemanticVersionV1(string clearVersion)
 {
 	if (BuildSystem.IsRunningOnGitHubActions)
 	{
-		var tag = workflow.RefType == GitHubActionsRefType.Tag ? workflow.RefName : null;
-		if (tag != null)
+		if (BuildSystem.GitHubActions.Environment.Workflow.Workflow.RefType == GitHubActionsRefType.Tag)
 		{
-			return tag;
+			return BuildSystem.GitHubActions.Environment.Workflow.Workflow.RefName;
 		}
 
-		return $"{clearVersion}-CI{buildId}";
+		var buildNumber = BuildSystem.GitHubActions.Environment.Workflow.Workflow.RunNumber;
+		return $"{clearVersion}-CI{buildNumber}";
 	}
 
 	return $"{clearVersion}-dev";
