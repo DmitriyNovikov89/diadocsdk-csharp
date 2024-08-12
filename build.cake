@@ -318,9 +318,9 @@ public string GetVersionFromTag()
 	if (BuildSystem.GitHubActions.IsRunningOnGitHubActions)
 	{
 		var workflow = BuildSystem.GitHubActions.Environment.Workflow;
-		if(workflow.RefType == GitHubActionsRefType.Tag)
+		if(EnvironmentVariable("github_ref_type") == "tag")
 		{
-			return workflow.RefName;
+			return workflow.Ref;
 		}
 	}
 
@@ -344,9 +344,9 @@ public string GetSemanticVersionV1(string clearVersion)
 	if (BuildSystem.GitHubActions.IsRunningOnGitHubActions)
 	{
 		var workflow = BuildSystem.GitHubActions.Environment.Workflow;
-		if(workflow.RefType == GitHubActionsRefType.Tag)
+		if(EnvironmentVariable("github_ref_type") == "tag")
 		{
-			return workflow.RefName;
+			return workflow.Ref;
 		}
 		
 		var buildNumber = workflow.RunNumber;
