@@ -28,7 +28,7 @@ jobs:
           target: Default
           arguments: |
             configuration: Release
-          cake-version: 4.0.0
+          cake-version: 2.0.0
           verbosity: Diagnostic
 
       - name: Upload artifacts
