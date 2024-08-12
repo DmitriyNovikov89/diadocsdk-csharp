@@ -331,6 +331,7 @@ public string GetVersionFromTag()
 		foreach(PropertyInfo prop in properties)
 		{
 		Information(@"Name: {0}", prop.Name);
+		Information(@"Type: {0}", prop.PropertyType);
 		}
 	}
 
