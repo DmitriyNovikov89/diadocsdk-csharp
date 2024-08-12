@@ -321,13 +321,16 @@ public string GetVersionFromTag()
         @"Workflow:
         Workflow: {0}
         Action: {1}
-        Actor: {2}
-		Test: {3}",
+        Actor: {2}",
         BuildSystem.GitHubActions.Environment.Workflow.Workflow,
         BuildSystem.GitHubActions.Environment.Workflow.Action,
-        BuildSystem.GitHubActions.Environment.Workflow.Actor,
-		BuildSystem.GitHubActions.Environment.Workflow.GetType().GetProperties();	
+        BuildSystem.GitHubActions.Environment.Workflow.Actor	
         );
+		PropertyInfo[] properties = BuildSystem.GitHubActions.Environment.Workflow.GetType().GetProperties();
+		foreach(PropertyInfo prop in properties)
+		{
+		Information(@"Name: {0}", prop.Name);
+		}
 	}
 
 	if (string.IsNullOrEmpty(lastestTag))
