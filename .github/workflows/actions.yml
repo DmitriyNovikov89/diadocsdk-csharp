@@ -24,6 +24,7 @@ jobs:
         uses: cake-build/cake-action@v2
         env:
           diadoc_signing_secret: ${{ secrets.DIADOC_SIGNING_SECRET }}
+          github_ref_type: ${{ github.ref_type }}
         with:
           target: Default
           arguments: |
