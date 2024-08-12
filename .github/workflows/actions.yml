@@ -29,7 +29,8 @@ jobs:
           arguments: |
             configuration: Release
           verbosity: Diagnostic
-
+          cake-version: 1.3.0
+          
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
