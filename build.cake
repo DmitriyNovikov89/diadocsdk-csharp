@@ -8,8 +8,6 @@
 using Cake.Common.Diagnostics;
 using Cake.Git;
 using System.Text.RegularExpressions;
-using Cake.Common.Build.GitHubActions;
-using Cake.Common.Build.GitHubActions.Data;
 
 var target = Argument("target", "Default");
 var configuration = Argument("configuration", "Release");
@@ -319,7 +317,11 @@ public string GetVersionFromTag()
 
 	if (BuildSystem.GitHubActions.IsRunningOnGitHubActions)
 	{
-		return EnvironmentVariable("GITHUB_REF")
+		workflow = BuildSystem.GitHubActions.Environment.Workflow;
+		if(workflow.RefType == GitHubActionsRefType.Tag)
+		{
+			return EnvironmentVariable("GITHUB_REF");
+		}
 	}
 
 	if (string.IsNullOrEmpty(lastestTag))
@@ -341,8 +343,12 @@ public string GetSemanticVersionV1(string clearVersion)
 {
 	if (BuildSystem.GitHubActions.IsRunningOnGitHubActions)
 	{
-		return EnvironmentVariable("GITHUB_REF")
-
+		workflow = BuildSystem.GitHubActions.Environment.Workflow;
+		if(workflow.RefType == GitHubActionsRefType.Tag)
+		{
+			return EnvironmentVariable("GITHUB_REF");
+		}
+		
 		var buildNumber = workflow.RunNumber;
 		return $"{clearVersion}-CI{buildNumber}";
 	}
