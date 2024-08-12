@@ -320,9 +320,10 @@ public string GetVersionFromTag()
 
 	if (BuildSystem.IsRunningOnGitHubActions)
 	{
-		if (workflow.RefType == GitHubActionsRefType.Tag)
+		var tag = workflow.RefType == GitHubActionsRefType.Tag ? workflow.RefName : null;
+		if (tag != null)
 		{
-			return workflow.RefName;
+			return tag;
 		}
 	}
 
@@ -345,9 +346,10 @@ public string GetSemanticVersionV1(string clearVersion)
 {
 	if (BuildSystem.IsRunningOnGitHubActions)
 	{
-		if (workflow.RefType == GitHubActionsRefType.Tag)
+		var tag = workflow.RefType == GitHubActionsRefType.Tag ? workflow.RefName : null;
+		if (tag != null)
 		{
-			return workflow.RefName;
+			return tag;
 		}
 
 		return $"{clearVersion}-CI{buildId}";
