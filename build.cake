@@ -8,6 +8,7 @@
 using Cake.Common.Diagnostics;
 using Cake.Git;
 using System.Text.RegularExpressions;
+using System.Reflection;
 
 var target = Argument("target", "Default");
 var configuration = Argument("configuration", "Release");
