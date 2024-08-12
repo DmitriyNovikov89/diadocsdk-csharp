@@ -29,7 +29,6 @@ jobs:
           arguments: |
             configuration: Release
           cake-version: 1.3.0
-          cake-bootstrap: skip
           verbosity: Diagnostic
 
       - name: Upload artifacts
