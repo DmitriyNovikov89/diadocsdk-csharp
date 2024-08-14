@@ -15,7 +15,7 @@ jobs:
       - name: Setup dotnet (5.0.x)
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 6.x
+          dotnet-version: 5.0.x
 
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v2
@@ -42,7 +42,7 @@ jobs:
           if-no-files-found: error
 
   publish:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     needs: build_and_test
     if: startsWith(github.event.ref, 'refs/tags/version')
     steps:
